@@ -4,7 +4,7 @@
 const { MongoClient } = require('mongodb');
 
 // Database connection
-const MONGODB_URI = 'mongodb+srv://draviku8_db_user:IvHVqiBmIRyeLKmi@cluster0.59xdzew.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const MONGODB_URI = '<insert_mongodb_uri>';
 const DATABASE_NAME = 'asu_parking';
 
 class ParkingDatabase {
