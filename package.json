@@ -1,0 +1,29 @@
+{
+  "name": "asu-smart-parking-query",
+  "version": "1.0.0",
+  "description": "ASU Smart Parking Query System - Translating natural language questions into MongoDB geospatial queries",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "node test_suite.js",
+    "setup": "node setup_database.js"
+  },
+  "keywords": [
+    "mongodb",
+    "geospatial",
+    "parking",
+    "asu",
+    "natural-language-processing"
+  ],
+  "author": "ASU Parking & Transit IT Team",
+  "license": "MIT",
+  "dependencies": {
+    "mongodb": "^6.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
