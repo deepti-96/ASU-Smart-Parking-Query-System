@@ -17,7 +17,7 @@ Students, staff, and visitors want to ask natural-language questions like:
 
 The team needs to translate these natural language questions into MongoDB geospatial queries using operators like `$near`, `$geoNear`, `$geoWithin`, and `$geoIntersects`. These queries must also be combined with attribute filters for availability, permit rules, and time-based access.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Node.js (version 14 or higher)
@@ -59,7 +59,7 @@ ASU_Parking_Lot/
 └── README.MD             # This file
 ```
 
-## 🗄️ Database Schema
+## Database Schema
 
 The parking lots are stored in a MongoDB collection with the following schema:
 
@@ -91,7 +91,7 @@ The parking lots are stored in a MongoDB collection with the following schema:
 }
 ```
 
-## 🔍 Geospatial Query Operators
+## Geospatial Query Operators
 
 This project demonstrates all major MongoDB geospatial operators:
 
@@ -143,7 +143,7 @@ db.parking_lots.find({
 })
 ```
 
-## 🧠 Natural Language Processing
+## Natural Language Processing
 
 The system can parse natural language queries and convert them to MongoDB queries:
 
@@ -162,7 +162,7 @@ The system can parse natural language queries and convert them to MongoDB querie
 - **Features**: "EV charging", "electric", "ADA", "accessible"
 - **Time**: "after 6 pm", "before 8 am", "at 2 pm"
 
-## ⏰ Time-Based Filtering
+## Time-Based Filtering
 
 The system supports time-based availability checking:
 
@@ -174,7 +174,7 @@ const isAvailable = isParkingAvailableAtTime(parkingLot, new Date('2024-01-15T18
 const available = await findAvailableParkingAtTime(criteria, targetTime);
 ```
 
-## 🧪 Testing
+## Testing
 
 Run the comprehensive test suite:
 
@@ -190,7 +190,7 @@ The test suite includes:
 - README use case validation
 - Data integrity checks
 
-## 🎮 Interactive Mode
+## Interactive Mode
 
 The application includes an interactive mode where you can:
 - Enter natural language queries
@@ -198,7 +198,7 @@ The application includes an interactive mode where you can:
 - Simulate real-time updates
 - Test different scenarios
 
-## 📊 Sample Data
+## Sample Data
 
 The system includes sample data for:
 - **Tempe Campus**: Memorial Union, BYENG, Fulton Center, Downtown Tempe
@@ -207,7 +207,7 @@ The system includes sample data for:
 
 Each parking lot includes realistic attributes like capacity, availability, permit types, EV charging, and ADA spaces.
 
-## 🔧 Customization
+## Customization
 
 ### Adding New Buildings
 Update the `buildingCoordinates` object in `query_parser.js`:
@@ -239,7 +239,7 @@ this.zones = {
 };
 ```
 
-## 🚨 Troubleshooting
+## Troubleshooting
 
 ### Common Issues:
 
@@ -257,14 +257,14 @@ this.zones = {
    - Check the building names in the coordinates mapping
    - Verify the query format
 
-## 📈 Performance Considerations
+## Performance Considerations
 
 - Geospatial indexes are created automatically
 - Compound indexes optimize common query patterns
 - Distance calculations use spherical geometry
 - Results are limited to reasonable distances by default
 
-## 🤝 Contributing
+## Contributing
 
 To extend this project:
 1. Add new geospatial query patterns
@@ -273,6 +273,6 @@ To extend this project:
 4. Implement real-time data updates
 5. Create a web interface
 
-## 📝 License
+## License
 
 MIT License - See package.json for details
