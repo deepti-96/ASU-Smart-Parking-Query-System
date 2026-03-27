@@ -30,6 +30,11 @@ The team needs to translate these natural language questions into MongoDB geospa
    npm install
    ```
 
+2. **Install dotenv for environment variable support:**
+   ```bash
+   npm install dotenv
+   ```
+
 2. **Set up the database:**
    ```bash
    npm run setup
@@ -45,7 +50,7 @@ The team needs to translate these natural language questions into MongoDB geospa
    npm test
    ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 ASU_Parking_Lot/
