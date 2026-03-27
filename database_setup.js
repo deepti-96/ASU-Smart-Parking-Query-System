@@ -4,7 +4,8 @@
 const { MongoClient } = require('mongodb');
 
 // Database connection
-const MONGODB_URI = '<insert_mongodb_uri>';
+require('dotenv').config();
+const MONGODB_URI = process.env.MONGODB_URI;
 const DATABASE_NAME = 'asu_parking';
 
 class ParkingDatabase {
