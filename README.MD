@@ -1,4 +1,4 @@
-# ASU Smart Parking Query Project
+# ASU Smart Parking
 
 This project focuses on translating natural-language questions about parking availability at Arizona State University into functional MongoDB geospatial queries.
 
