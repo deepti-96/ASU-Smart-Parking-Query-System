@@ -239,7 +239,7 @@ function sendHtml(res) {
         return;
       }
       resultsEl.innerHTML = lots.map((lot) => {
-        const distance = lot.distance ? '<span class="pill">' + Math.round(lot.distance) + 'm</span>' : '';
+        const distance = lot.distance !== undefined ? '<span class="pill">' + Math.round(lot.distance) + 'm</span>' : '';
         const ev = lot.hasEVChargers ? '<span class="pill green">EV</span>' : '';
         const ada = lot.adaSpaces > 0 ? '<span class="pill gold">' + lot.adaSpaces + ' ADA</span>' : '';
         return '<article class="lot">' +
