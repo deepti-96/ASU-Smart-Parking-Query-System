@@ -1,6 +1,6 @@
-# ASU Smart Parking Query Project
+# ASU Smart Parking
 
-This project focuses on translating natural-language questions about parking availability at Arizona State University into functional MongoDB geospatial queries.
+This project translates natural-language questions about Arizona State University parking into MongoDB geospatial queries. It includes a command-line demo, a small localhost web app, sample parking data, and a Mongo-backed test suite.
 
 ## Problem Statement
 
@@ -35,15 +35,34 @@ The team needs to translate these natural language questions into MongoDB geospa
    npm run setup
    ```
 
-3. **Run the application:**
+3. **Run the command-line demo:**
    ```bash
    npm start
    ```
 
-4. **Run tests:**
+4. **Run the localhost web app:**
+   ```bash
+   npm run web
+   ```
+   Open `http://127.0.0.1:8090`.
+
+5. **Run tests:**
    ```bash
    npm test
    ```
+
+### Environment Variables
+
+The app uses local MongoDB by default:
+
+```bash
+MONGODB_URI=mongodb://127.0.0.1:27017
+MONGODB_DATABASE=asu_parking
+PORT=8090
+HOST=127.0.0.1
+```
+
+Override these when you need a different MongoDB database or web server port.
 
 ## 📁 Project Structure
 
@@ -55,6 +74,7 @@ ASU_Parking_Lot/
 ├── query_parser.js        # Natural language processing
 ├── test_suite.js          # Comprehensive test suite
 ├── setup_database.js      # Database initialization script
+├── web_server.js          # Local browser demo and JSON API
 ├── package.json           # Dependencies and scripts
 └── README.MD             # This file
 ```
@@ -192,11 +212,26 @@ The test suite includes:
 
 ## 🎮 Interactive Mode
 
-The application includes an interactive mode where you can:
+The command-line app includes an interactive mode where you can:
 - Enter natural language queries
 - View parking statistics
 - Simulate real-time updates
 - Test different scenarios
+
+## 🌐 Local Web App
+
+Run the browser demo with:
+
+```bash
+npm run web
+```
+
+The web app exposes:
+- `GET /` for the browser interface
+- `GET /api/lots` for all parking lots
+- `GET /api/stats` for campus-level totals
+- `GET /api/search?q=...` for natural-language search
+- `POST /api/update` to simulate availability changes
 
 ## 📊 Sample Data
 
