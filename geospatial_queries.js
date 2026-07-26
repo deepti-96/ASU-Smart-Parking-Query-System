@@ -96,7 +96,7 @@ class GeospatialQueries {
             const query = {};
             
             // Geospatial filter
-            if (criteria.longitude && criteria.latitude) {
+            if (typeof criteria.longitude === 'number' && typeof criteria.latitude === 'number') {
                 query.location = {
                     $near: {
                         $geometry: { 
