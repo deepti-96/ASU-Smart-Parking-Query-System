@@ -244,7 +244,7 @@ class ASUParkingApp {
                             console.log(`   Permit Type: ${lot.permitType}`);
                             if (lot.hasEVChargers) console.log(`   ⚡ EV Charging Available`);
                             if (lot.adaSpaces > 0) console.log(`   ♿ ${lot.adaSpaces} ADA Spaces`);
-                            if (lot.distance) console.log(`   📍 Distance: ${Math.round(lot.distance)}m`);
+                            if (lot.distance !== undefined) console.log(`   📍 Distance: ${Math.round(lot.distance)}m`);
                             console.log('');
                         });
                     }
