@@ -16,19 +16,21 @@ class ParkingQueryParser {
             "downtown tempe": [-111.9400, 33.4250]
         };
         
-        // Permit type mappings
-        this.permitTypes = {
-            "visitor": "Visitor",
-            "visitors": "Visitor",
-            "student": "Student", 
-            "students": "Student",
-            "faculty": "Faculty",
-            "hourly": "Hourly",
-            "permit": "Student",
-            "no permit": "Hourly",
-            "doesn't require a permit": "Hourly",
-            "doesn't require permit": "Hourly"
-        };
+        // Permit type mappings. Longer phrases are checked first.
+        this.permitTypes = [
+            ["doesn't require a permit", "Hourly"],
+            ["doesn't require permit", "Hourly"],
+            ["does not require a permit", "Hourly"],
+            ["does not require permit", "Hourly"],
+            ["no permit", "Hourly"],
+            ["visitor", "Visitor"],
+            ["visitors", "Visitor"],
+            ["student", "Student"],
+            ["students", "Student"],
+            ["faculty", "Faculty"],
+            ["hourly", "Hourly"],
+            ["permit", "Student"]
+        ];
         
         // Campus mappings
         this.campuses = {
@@ -145,7 +147,7 @@ class ParkingQueryParser {
 
     // Extract permit type requirements
     extractPermitType(query, criteria) {
-        for (const [key, value] of Object.entries(this.permitTypes)) {
+        for (const [key, value] of this.permitTypes) {
             if (query.includes(key)) {
                 criteria.permitType = value;
                 break;
