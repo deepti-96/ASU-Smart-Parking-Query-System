@@ -109,8 +109,13 @@ class GeospatialQueries {
             }
             
             // Attribute filters
-            if (criteria.minAvailability !== undefined) {
-                query.currentAvailability = { $gte: criteria.minAvailability };
+            const availabilityMinimums = [
+                criteria.minAvailability,
+                criteria.currentAvailability
+            ].filter(value => value !== undefined);
+
+            if (availabilityMinimums.length > 0) {
+                query.currentAvailability = { $gte: Math.max(...availabilityMinimums) };
             }
             
             if (criteria.permitType) {
