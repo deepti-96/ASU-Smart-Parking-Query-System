@@ -332,10 +332,12 @@ class ParkingTestSuite {
                 console.log('\n🎉 ALL TESTS PASSED! The ASU Smart Parking Query System is working correctly.');
             } else {
                 console.log('\n⚠️  Some tests failed. Please review the errors above.');
+                process.exitCode = 1;
             }
             
         } catch (error) {
             console.error('Test suite error:', error);
+            process.exitCode = 1;
         } finally {
             await this.cleanup();
         }
