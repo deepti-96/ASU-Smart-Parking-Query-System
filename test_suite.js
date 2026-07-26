@@ -61,7 +61,7 @@ class ParkingTestSuite {
             if (results.length === 0) {
                 throw new Error('No results found for $geoNear query');
             }
-            if (!results[0].distance) {
+            if (results[0].distance === undefined) {
                 throw new Error('Distance field not included in results');
             }
             console.log(`   Found ${results.length} lots with distance calculations`);
