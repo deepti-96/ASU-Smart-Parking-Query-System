@@ -255,13 +255,14 @@ this.buildingCoordinates = {
 ```
 
 ### Adding New Permit Types
-Update the `permitTypes` object in `query_parser.js`:
+Update the ordered `permitTypes` array in `query_parser.js`. Put longer phrases before shorter phrases so specific matches win:
 
 ```javascript
-this.permitTypes = {
-  "new type": "NewType",
-  // ... existing types
-};
+this.permitTypes = [
+  ["does not require permit", "Hourly"],
+  ["new type", "NewType"],
+  // ... existing mappings
+];
 ```
 
 ### Adding New Zones
@@ -279,18 +280,23 @@ this.zones = {
 ### Common Issues:
 
 1. **MongoDB Connection Error**
-   - Ensure MongoDB is running on localhost:27017
-   - Check if the database name is available
+   - Ensure MongoDB is running on `127.0.0.1:27017`
+   - Set `MONGODB_URI` if your database runs somewhere else
+   - Set `MONGODB_DATABASE` if you want a database name other than `asu_parking`
 
 2. **No Results Found**
    - Verify the coordinates are correct
    - Check if the distance parameters are reasonable
    - Ensure sample data was inserted properly
+   - Run `npm run setup` again to reset the sample lots
 
 3. **Natural Language Parsing Issues**
    - Use supported keywords and phrases
    - Check the building names in the coordinates mapping
    - Verify the query format
+
+4. **Web App Port Already in Use**
+   - Start the server on another port, for example `PORT=8091 npm run web`
 
 ## 📈 Performance Considerations
 
@@ -306,7 +312,7 @@ To extend this project:
 2. Enhance natural language processing
 3. Add more campus locations
 4. Implement real-time data updates
-5. Create a web interface
+5. Expand the web interface with maps, filters, or saved queries
 
 ## 📝 License
 
