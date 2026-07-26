@@ -233,6 +233,16 @@ function sendHtml(res) {
     const statsEl = document.getElementById('stats');
     const titleEl = document.getElementById('resultTitle');
 
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[char]));
+    }
+
     function formatLots(lots) {
       if (!lots.length) {
         resultsEl.innerHTML = '<div class="empty">No matching parking lots found.</div>';
@@ -243,10 +253,10 @@ function sendHtml(res) {
         const ev = lot.hasEVChargers ? '<span class="pill green">EV</span>' : '';
         const ada = lot.adaSpaces > 0 ? '<span class="pill gold">' + lot.adaSpaces + ' ADA</span>' : '';
         return '<article class="lot">' +
-          '<h2>' + lot.name + '</h2>' +
-          '<div class="meta">' + lot.campus + ' · ' + lot.permitType + ' · ' + lot.buildingNearby + '</div>' +
+          '<h2>' + escapeHtml(lot.name) + '</h2>' +
+          '<div class="meta">' + escapeHtml(lot.campus) + ' · ' + escapeHtml(lot.permitType) + ' · ' + escapeHtml(lot.buildingNearby) + '</div>' +
           '<div class="meta">' + lot.currentAvailability + ' of ' + lot.capacity + ' spots available</div>' +
-          '<div class="pillrow">' + distance + ev + ada + '<span class="pill">' + lot.zones.join(', ') + '</span></div>' +
+          '<div class="pillrow">' + distance + ev + ada + '<span class="pill">' + escapeHtml(lot.zones.join(', ')) + '</span></div>' +
         '</article>';
       }).join('');
     }
