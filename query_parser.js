@@ -104,16 +104,16 @@ class ParkingQueryParser {
     extractDistance(query, criteria) {
         // Look for distance patterns like "500 meters", "1 km", "within 500m"
         const distancePatterns = [
-            /within\s+(\d+)\s*(meters?|m)\b/,
-            /within\s+(\d+)\s*(kilometers?|kms?|km)\b/,
-            /(\d+)\s*(meters?|m)\b/,
-            /(\d+)\s*(kilometers?|kms?|km)\b/
+            /within\s+(\d+(?:\.\d+)?)\s*(meters?|m)\b/,
+            /within\s+(\d+(?:\.\d+)?)\s*(kilometers?|kms?|km)\b/,
+            /(\d+(?:\.\d+)?)\s*(meters?|m)\b/,
+            /(\d+(?:\.\d+)?)\s*(kilometers?|kms?|km)\b/
         ];
         
         for (const pattern of distancePatterns) {
             const match = query.match(pattern);
             if (match) {
-                const distance = parseInt(match[1]);
+                const distance = parseFloat(match[1]);
                 const unit = match[2] || 'm';
                 criteria.maxDistance = unit.startsWith('k') ? distance * 1000 : distance;
                 break;

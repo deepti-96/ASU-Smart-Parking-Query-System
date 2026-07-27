@@ -173,6 +173,15 @@ class ParkingTestSuite {
                     maxDistance: 1000,
                     hasEVChargers: true
                 }
+            },
+            {
+                query: "Find visitor parking within 1.5 km of Memorial Union.",
+                expected: {
+                    longitude: -111.9389,
+                    latitude: 33.4205,
+                    maxDistance: 1500,
+                    permitType: "Visitor"
+                }
             }
         ];
 
