@@ -225,6 +225,18 @@ class ParkingTestSuite {
                 throw new Error('Unexpected EV charging filter from "everywhere"');
             }
         });
+
+        await this.runTest('Natural language time with minutes', async () => {
+            const result = this.queryParser.parseQuery('Find visitor parking after 6:30 pm near Memorial Union');
+
+            if (!result.targetTime) {
+                throw new Error('Expected targetTime to be parsed');
+            }
+
+            if (result.targetTime.getHours() !== 18 || result.targetTime.getMinutes() !== 30) {
+                throw new Error(`Expected 18:30, got ${result.targetTime.toTimeString().slice(0, 5)}`);
+            }
+        });
     }
 
     // Test time-based filtering

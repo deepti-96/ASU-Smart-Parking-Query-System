@@ -188,16 +188,17 @@ class ParkingQueryParser {
     extractTimeRequirements(query, criteria) {
         // Look for time patterns like "after 6 pm", "before 8 am", "at 2 pm"
         const timePatterns = [
-            /after\s+(\d+)\s*(am|pm)/,
-            /before\s+(\d+)\s*(am|pm)/,
-            /at\s+(\d+)\s*(am|pm)/
+            /after\s+(\d{1,2})(?::(\d{2}))?\s*(am|pm)/,
+            /before\s+(\d{1,2})(?::(\d{2}))?\s*(am|pm)/,
+            /at\s+(\d{1,2})(?::(\d{2}))?\s*(am|pm)/
         ];
         
         for (const pattern of timePatterns) {
             const match = query.match(pattern);
             if (match) {
                 let hour = parseInt(match[1]);
-                const period = match[2];
+                const minute = match[2] ? parseInt(match[2]) : 0;
+                const period = match[3];
                 
                 // Convert to 24-hour format
                 if (period === 'pm' && hour !== 12) {
@@ -207,7 +208,7 @@ class ParkingQueryParser {
                 }
                 
                 criteria.targetTime = new Date();
-                criteria.targetTime.setHours(hour, 0, 0, 0);
+                criteria.targetTime.setHours(hour, minute, 0, 0);
                 break;
             }
         }
