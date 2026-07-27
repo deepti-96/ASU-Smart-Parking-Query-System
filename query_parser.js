@@ -130,16 +130,16 @@ class ParkingQueryParser {
     extractAvailability(query, criteria) {
         // Look for patterns like ">20 open spots", "more than 20", "at least 20"
         const availabilityPatterns = [
-            />(\d+)\s*open/,
-            /more\s+than\s+(\d+)/,
-            /at\s+least\s+(\d+)/,
-            /(\d+)\s*or\s+more/
+            { pattern: />\s*(\d+)\s*open/, exclusive: true },
+            { pattern: /more\s+than\s+(\d+)/, exclusive: true },
+            { pattern: /at\s+least\s+(\d+)/, exclusive: false },
+            { pattern: /(\d+)\s*or\s+more/, exclusive: false }
         ];
         
-        for (const pattern of availabilityPatterns) {
+        for (const { pattern, exclusive } of availabilityPatterns) {
             const match = query.match(pattern);
             if (match) {
-                criteria.minAvailability = parseInt(match[1]);
+                criteria.minAvailability = parseInt(match[1]) + (exclusive ? 1 : 0);
                 break;
             }
         }

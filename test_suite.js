@@ -162,7 +162,7 @@ class ParkingTestSuite {
                     longitude: -111.9320,
                     latitude: 33.4210,
                     maxDistance: 500,
-                    minAvailability: 20
+                    minAvailability: 21
                 }
             },
             {
@@ -181,6 +181,14 @@ class ParkingTestSuite {
                     latitude: 33.4205,
                     maxDistance: 1500,
                     permitType: "Visitor"
+                }
+            },
+            {
+                query: "Show lots near BYENG with at least 20 open spots.",
+                expected: {
+                    longitude: -111.9320,
+                    latitude: 33.4210,
+                    minAvailability: 20
                 }
             }
         ];
