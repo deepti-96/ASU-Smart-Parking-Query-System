@@ -206,6 +206,14 @@ class ParkingTestSuite {
                 console.log(`   Parsed: "${testCase.query}"`);
             });
         }
+
+        await this.runTest('Natural language EV keyword boundaries', async () => {
+            const result = this.queryParser.parseQuery('Show parking everywhere near BYENG');
+
+            if (result.hasEVChargers !== undefined) {
+                throw new Error('Unexpected EV charging filter from "everywhere"');
+            }
+        });
     }
 
     // Test time-based filtering

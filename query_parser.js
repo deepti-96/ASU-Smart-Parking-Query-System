@@ -157,9 +157,16 @@ class ParkingQueryParser {
 
     // Extract EV charging requirements
     extractEVCharging(query, criteria) {
-        const evKeywords = ['ev', 'electric', 'charging', 'charger', 'ev-charging'];
-        for (const keyword of evKeywords) {
-            if (query.includes(keyword)) {
+        const evPatterns = [
+            /\bev\b/,
+            /\bev-charging\b/,
+            /\belectric\b/,
+            /\bcharging\b/,
+            /\bchargers?\b/
+        ];
+
+        for (const pattern of evPatterns) {
+            if (pattern.test(query)) {
                 criteria.hasEVChargers = true;
                 break;
             }
