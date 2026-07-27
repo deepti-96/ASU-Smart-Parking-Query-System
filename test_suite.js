@@ -143,6 +143,17 @@ class ParkingTestSuite {
             }
             console.log(`   Found ${results.length} lots with ADA spaces`);
         });
+
+        await this.runTest('Building filter escapes regex syntax', async () => {
+            const results = await this.geospatialQueries.findParkingWithFilters({
+                buildingNearby: "BYENG("
+            });
+
+            if (results.length !== 0) {
+                throw new Error('Unexpected results for malformed building filter');
+            }
+            console.log('   Malformed building filter did not throw');
+        });
     }
 
     // Test natural language parsing

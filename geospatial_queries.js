@@ -7,6 +7,10 @@ class GeospatialQueries {
         this.collection = this.db.collection('parking_lots');
     }
 
+    escapeRegex(value) {
+        return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
     // $near query for finding nearest parking
     async findNearestParking(longitude, latitude, maxDistance = 1000) {
         try {
@@ -139,7 +143,7 @@ class GeospatialQueries {
             }
             
             if (criteria.buildingNearby) {
-                query.buildingNearby = { $regex: criteria.buildingNearby, $options: 'i' };
+                query.buildingNearby = { $regex: this.escapeRegex(criteria.buildingNearby), $options: 'i' };
             }
 
             const results = await this.collection.find(query).toArray();
