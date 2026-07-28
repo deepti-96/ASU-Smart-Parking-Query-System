@@ -183,9 +183,15 @@ class ParkingQueryParser {
 
     // Extract ADA requirements
     extractADARequirements(query, criteria) {
-        const adaKeywords = ['ada', 'accessible', 'disability', 'handicap'];
-        for (const keyword of adaKeywords) {
-            if (query.includes(keyword)) {
+        const adaPatterns = [
+            /\bada\b/,
+            /\baccessible\b/,
+            /\bdisability\b/,
+            /\bhandicapped?\b/
+        ];
+
+        for (const pattern of adaPatterns) {
+            if (pattern.test(query)) {
                 criteria.adaSpaces = 1;
                 break;
             }

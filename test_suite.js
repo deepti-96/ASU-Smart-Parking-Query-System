@@ -253,6 +253,14 @@ class ParkingTestSuite {
                 throw new Error('Unexpected permit type filter from "permitless"');
             }
         });
+
+        await this.runTest('Natural language ADA keyword boundaries', async () => {
+            const result = this.queryParser.parseQuery('Find inaccessible parking near Memorial Union');
+
+            if (result.adaSpaces !== undefined) {
+                throw new Error('Unexpected ADA filter from "inaccessible"');
+            }
+        });
     }
 
     // Test time-based filtering
