@@ -160,6 +160,10 @@ class GeospatialQueries {
         const dayOfWeek = targetTime.toLocaleDateString('en-US', { weekday: 'long' });
         const timeString = targetTime.toTimeString().slice(0, 5); // HH:MM format
         
+        if (!Array.isArray(parkingLot.timeWindows)) {
+            return false;
+        }
+
         return parkingLot.timeWindows.some(window => 
             window.dayOfWeek === dayOfWeek &&
             timeString >= window.startTime &&

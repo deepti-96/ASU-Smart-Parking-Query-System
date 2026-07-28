@@ -305,6 +305,15 @@ class ParkingTestSuite {
             }
             console.log(`   Found ${results.length} lots available at ${testTime.toLocaleString()}`);
         });
+
+        await this.runTest('Time-based availability handles missing windows', async () => {
+            const testTime = new Date('2024-01-15T10:00:00');
+            const isAvailable = this.geospatialQueries.isParkingAvailableAtTime({}, testTime);
+
+            if (isAvailable !== false) {
+                throw new Error('Expected parking lot without windows to be unavailable');
+            }
+        });
     }
 
     // Test specific use cases from README
