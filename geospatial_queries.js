@@ -192,18 +192,25 @@ class GeospatialQueries {
     // Update parking availability (simulate real-time updates)
     async updateParkingAvailability(lotId, newAvailability) {
         try {
+            const lot = await this.collection.findOne({ _id: lotId });
+
+            if (!lot) {
+                return { matchedCount: 0, modifiedCount: 0 };
+            }
+
+            const clampedAvailability = Math.max(0, Math.min(lot.capacity, newAvailability));
             const result = await this.collection.updateOne(
                 { _id: lotId },
                 { 
                     $set: { 
-                        currentAvailability: newAvailability,
+                        currentAvailability: clampedAvailability,
                         lastUpdated: new Date()
                     }
                 }
             );
             
             if (result.modifiedCount > 0) {
-                console.log(`Updated availability for lot ${lotId} to ${newAvailability}`);
+                console.log(`Updated availability for lot ${lotId} to ${clampedAvailability}`);
             }
             return result;
         } catch (error) {

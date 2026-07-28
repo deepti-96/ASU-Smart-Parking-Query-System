@@ -316,6 +316,29 @@ class ParkingTestSuite {
         });
     }
 
+    // Test availability updates
+    async testAvailabilityUpdates() {
+        await this.runTest('Availability updates are clamped', async () => {
+            const lot = await this.geospatialQueries.collection.findOne({ name: 'Polytechnic Lot 1' });
+
+            try {
+                await this.geospatialQueries.updateParkingAvailability(lot._id, lot.capacity + 50);
+                const capped = await this.geospatialQueries.collection.findOne({ _id: lot._id });
+                if (capped.currentAvailability !== lot.capacity) {
+                    throw new Error(`Expected capped availability ${lot.capacity}, got ${capped.currentAvailability}`);
+                }
+
+                await this.geospatialQueries.updateParkingAvailability(lot._id, -10);
+                const floored = await this.geospatialQueries.collection.findOne({ _id: lot._id });
+                if (floored.currentAvailability !== 0) {
+                    throw new Error(`Expected floored availability 0, got ${floored.currentAvailability}`);
+                }
+            } finally {
+                await this.geospatialQueries.updateParkingAvailability(lot._id, lot.currentAvailability);
+            }
+        });
+    }
+
     // Test specific use cases from README
     async testReadmeUseCases() {
         await this.runTest('Use case 1: Memorial Union visitor parking', async () => {
@@ -421,6 +444,7 @@ class ParkingTestSuite {
             await this.testAttributeFiltering();
             await this.testNaturalLanguageParsing();
             await this.testTimeBasedFiltering();
+            await this.testAvailabilityUpdates();
             await this.testReadmeUseCases();
             await this.testDataIntegrity();
             
