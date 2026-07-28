@@ -52,7 +52,7 @@ class ParkingQueryParser {
 
     // Main parsing function
     parseQuery(naturalLanguageQuery) {
-        const query = naturalLanguageQuery.toLowerCase();
+        const query = String(naturalLanguageQuery || '').trim().toLowerCase();
         const criteria = {};
         
         console.log(`Parsing query: "${naturalLanguageQuery}"`);

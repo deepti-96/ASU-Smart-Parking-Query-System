@@ -237,6 +237,14 @@ class ParkingTestSuite {
                 throw new Error(`Expected 18:30, got ${result.targetTime.toTimeString().slice(0, 5)}`);
             }
         });
+
+        await this.runTest('Natural language parser handles blank input', async () => {
+            const result = this.queryParser.parseQuery(null);
+
+            if (result.maxDistance !== 1000) {
+                throw new Error(`Expected default maxDistance=1000, got ${result.maxDistance}`);
+            }
+        });
     }
 
     // Test time-based filtering
