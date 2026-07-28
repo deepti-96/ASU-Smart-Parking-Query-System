@@ -154,6 +154,19 @@ class ParkingTestSuite {
             }
             console.log('   Malformed building filter did not throw');
         });
+
+        await this.runTest('Zero max distance filtering', async () => {
+            const results = await this.geospatialQueries.findParkingWithFilters({
+                longitude: -111.9389,
+                latitude: 33.4205,
+                maxDistance: 0
+            });
+
+            if (results.length !== 1 || results[0].name !== 'Lot 59 - Memorial Union') {
+                throw new Error(`Expected only exact Memorial Union lot, got ${results.length} results`);
+            }
+            console.log('   Found exact coordinate match only');
+        });
     }
 
     // Test natural language parsing

@@ -107,7 +107,7 @@ class GeospatialQueries {
                             type: "Point", 
                             coordinates: [criteria.longitude, criteria.latitude] 
                         },
-                        $maxDistance: criteria.maxDistance || 1000
+                        $maxDistance: criteria.maxDistance ?? 1000
                     }
                 };
             }
