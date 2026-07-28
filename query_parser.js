@@ -50,6 +50,14 @@ class ParkingQueryParser {
         };
     }
 
+    escapeRegex(value) {
+        return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    containsPhrase(query, phrase) {
+        return new RegExp(`(^|\\W)${this.escapeRegex(phrase)}(?=\\W|$)`).test(query);
+    }
+
     // Main parsing function
     parseQuery(naturalLanguageQuery) {
         const query = String(naturalLanguageQuery || '').trim().toLowerCase();
@@ -148,7 +156,7 @@ class ParkingQueryParser {
     // Extract permit type requirements
     extractPermitType(query, criteria) {
         for (const [key, value] of this.permitTypes) {
-            if (query.includes(key)) {
+            if (this.containsPhrase(query, key)) {
                 criteria.permitType = value;
                 break;
             }

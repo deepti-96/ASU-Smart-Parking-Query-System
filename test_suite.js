@@ -245,6 +245,14 @@ class ParkingTestSuite {
                 throw new Error(`Expected default maxDistance=1000, got ${result.maxDistance}`);
             }
         });
+
+        await this.runTest('Natural language permit keyword boundaries', async () => {
+            const result = this.queryParser.parseQuery('Find permitless parking near Memorial Union');
+
+            if (result.permitType !== undefined) {
+                throw new Error('Unexpected permit type filter from "permitless"');
+            }
+        });
     }
 
     // Test time-based filtering
