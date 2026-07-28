@@ -251,6 +251,14 @@ class ParkingTestSuite {
             }
         });
 
+        await this.runTest('Natural language rejects invalid times', async () => {
+            const result = this.queryParser.parseQuery('Find parking after 13:99 pm near Memorial Union');
+
+            if (result.targetTime !== undefined) {
+                throw new Error('Unexpected targetTime for invalid clock time');
+            }
+        });
+
         await this.runTest('Natural language parser handles blank input', async () => {
             const result = this.queryParser.parseQuery(null);
 

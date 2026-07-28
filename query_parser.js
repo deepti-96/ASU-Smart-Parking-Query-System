@@ -213,6 +213,10 @@ class ParkingQueryParser {
                 let hour = parseInt(match[1]);
                 const minute = match[2] ? parseInt(match[2]) : 0;
                 const period = match[3];
+
+                if (hour < 1 || hour > 12 || minute < 0 || minute > 59) {
+                    continue;
+                }
                 
                 // Convert to 24-hour format
                 if (period === 'pm' && hour !== 12) {
