@@ -233,6 +233,60 @@ function sendHtml(res) {
       margin: 0 0 8px;
       font-size: 18px;
     }
+    .lot {
+      display: grid;
+      gap: 10px;
+    }
+    .lot-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .lot-head h2 {
+      margin-bottom: 0;
+    }
+    .availability {
+      display: grid;
+      gap: 6px;
+    }
+    .availability-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .bar {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e8edf3;
+    }
+    .bar span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--maroon), var(--teal));
+    }
+    .details {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .detail {
+      padding: 8px;
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .detail strong {
+      display: block;
+      color: var(--ink);
+      font-size: 14px;
+    }
     .pillrow {
       display: flex;
       gap: 6px;
@@ -341,11 +395,20 @@ function sendHtml(res) {
         const distance = lot.distance !== undefined ? '<span class="pill">' + Math.round(lot.distance) + 'm</span>' : '';
         const ev = lot.hasEVChargers ? '<span class="pill green">EV</span>' : '';
         const ada = lot.adaSpaces > 0 ? '<span class="pill gold">' + lot.adaSpaces + ' ADA</span>' : '';
+        const availablePercent = Math.max(0, Math.min(100, Math.round((lot.currentAvailability / lot.capacity) * 100)));
+        const hourlyRate = lot.hourlyRate > 0 ? '$' + lot.hourlyRate.toFixed(2) + '/hr' : 'Included';
         return '<article class="lot">' +
-          '<h2>' + escapeHtml(lot.name) + '</h2>' +
+          '<div class="lot-head"><h2>' + escapeHtml(lot.name) + '</h2>' + distance + '</div>' +
           '<div class="meta">' + escapeHtml(lot.campus) + ' · ' + escapeHtml(lot.permitType) + ' · ' + escapeHtml(lot.buildingNearby) + '</div>' +
-          '<div class="meta">' + lot.currentAvailability + ' of ' + lot.capacity + ' spots available</div>' +
-          '<div class="pillrow">' + distance + ev + ada + '<span class="pill">' + escapeHtml(lot.zones.join(', ')) + '</span></div>' +
+          '<div class="availability">' +
+            '<div class="availability-row"><span>' + lot.currentAvailability + ' spots open</span><span>' + availablePercent + '%</span></div>' +
+            '<div class="bar"><span style="width: ' + availablePercent + '%"></span></div>' +
+          '</div>' +
+          '<div class="details">' +
+            '<div class="detail"><strong>' + lot.capacity + '</strong>capacity</div>' +
+            '<div class="detail"><strong>' + hourlyRate + '</strong>rate</div>' +
+          '</div>' +
+          '<div class="pillrow">' + ev + ada + '<span class="pill">' + escapeHtml(lot.zones.join(', ')) + '</span></div>' +
         '</article>';
       }).join('');
     }
