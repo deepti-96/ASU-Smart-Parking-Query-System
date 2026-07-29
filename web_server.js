@@ -174,6 +174,12 @@ function sendHtml(res) {
       background: #e9edf4;
       color: var(--ink);
     }
+    button:disabled {
+      cursor: wait;
+      opacity: 0.65;
+      transform: none;
+      box-shadow: none;
+    }
     .actions {
       display: flex;
       gap: 10px;
@@ -320,6 +326,16 @@ function sendHtml(res) {
       color: var(--muted);
       font-size: 14px;
     }
+    .status.error {
+      color: #9b1c31;
+      font-weight: 700;
+    }
+    .empty {
+      padding: 18px;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+    }
     @media (max-width: 850px) {
       header {
         align-items: flex-start;
@@ -375,6 +391,7 @@ function sendHtml(res) {
     const resultsEl = document.getElementById('results');
     const statsEl = document.getElementById('stats');
     const titleEl = document.getElementById('resultTitle');
+    const actionButtons = Array.from(document.querySelectorAll('button'));
 
     function escapeHtml(value) {
       return String(value).replace(/[&<>"']/g, (char) => ({
@@ -429,52 +446,74 @@ function sendHtml(res) {
       ].map(([label, value]) => '<div class="metric"><strong>' + value + '</strong><span>' + label + '</span></div>').join('');
     }
 
-    async function loadLots() {
-      statusEl.textContent = 'Loading...';
-      const response = await fetch('/api/lots');
+    async function fetchJson(url, options) {
+      const response = await fetch(url, options);
       const payload = await response.json();
+
+      if (!response.ok) {
+        throw new Error(payload.error || 'Request failed');
+      }
+
+      return payload;
+    }
+
+    async function withBusy(label, task) {
+      statusEl.textContent = label;
+      statusEl.classList.remove('error');
+      actionButtons.forEach((button) => { button.disabled = true; });
+
+      try {
+        await task();
+      } catch (error) {
+        statusEl.textContent = error.message;
+        statusEl.classList.add('error');
+      } finally {
+        actionButtons.forEach((button) => { button.disabled = false; });
+      }
+    }
+
+    async function loadLots() {
+      const payload = await fetchJson('/api/lots');
       titleEl.textContent = 'All parking lots';
       formatLots(payload.lots);
       statusEl.textContent = payload.lots.length + ' results';
     }
 
     async function loadStats() {
-      const response = await fetch('/api/stats');
-      const payload = await response.json();
+      const payload = await fetchJson('/api/stats');
       formatStats(payload.stats);
     }
 
     async function search() {
-      statusEl.textContent = 'Searching...';
-      const response = await fetch('/api/search?q=' + encodeURIComponent(queryInput.value));
-      const payload = await response.json();
+      const payload = await fetchJson('/api/search?q=' + encodeURIComponent(queryInput.value));
       titleEl.textContent = 'Search results';
       formatLots(payload.lots);
       statusEl.textContent = payload.lots.length + ' results';
     }
 
     async function simulateUpdate() {
-      statusEl.textContent = 'Updating...';
-      await fetch('/api/update', { method: 'POST' });
+      await fetchJson('/api/update', { method: 'POST' });
       await loadStats();
       await loadLots();
     }
 
-    document.getElementById('searchButton').addEventListener('click', search);
-    document.getElementById('refreshButton').addEventListener('click', async () => {
-      await loadStats();
-      await loadLots();
-    });
-    document.getElementById('updateButton').addEventListener('click', simulateUpdate);
+    document.getElementById('searchButton').addEventListener('click', () => withBusy('Searching...', search));
+    document.getElementById('refreshButton').addEventListener('click', () => withBusy('Loading...', async () => {
+        await loadStats();
+        await loadLots();
+      })
+    );
+    document.getElementById('updateButton').addEventListener('click', () => withBusy('Updating...', simulateUpdate));
     document.querySelectorAll('.example').forEach((button) => {
       button.addEventListener('click', () => {
         queryInput.value = button.textContent;
-        search();
+        withBusy('Searching...', search);
       });
     });
 
-    loadStats().then(loadLots).catch((error) => {
-      statusEl.textContent = error.message;
+    withBusy('Loading...', async () => {
+      await loadStats();
+      await loadLots();
     });
   </script>
 </body>
