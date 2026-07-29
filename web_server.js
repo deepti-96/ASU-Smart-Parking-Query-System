@@ -109,6 +109,22 @@ function sendHtml(res) {
       background: var(--surface);
       border-right: 1px solid var(--line);
     }
+    .panel-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    .panel-title h2 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+    .panel-title span {
+      color: var(--muted);
+      font-size: 13px;
+    }
     section {
       padding: 24px;
     }
@@ -129,6 +145,11 @@ function sendHtml(res) {
       padding: 12px;
       font: inherit;
       color: var(--ink);
+      box-shadow: inset 0 1px 2px rgba(27, 31, 42, 0.04);
+    }
+    textarea:focus {
+      outline: 3px solid rgba(31, 111, 139, 0.16);
+      border-color: var(--blue);
     }
     button {
       border: 0;
@@ -139,6 +160,15 @@ function sendHtml(res) {
       cursor: pointer;
       background: var(--maroon);
       color: white;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    }
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(27, 31, 42, 0.12);
+    }
+    button:focus-visible {
+      outline: 3px solid rgba(31, 111, 139, 0.2);
+      outline-offset: 2px;
     }
     button.secondary {
       background: #e9edf4;
@@ -155,12 +185,23 @@ function sendHtml(res) {
       gap: 8px;
       margin-top: 24px;
     }
+    .examples h3 {
+      margin: 0 0 2px;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
     .example {
       width: 100%;
       text-align: left;
-      background: #f4f6fa;
+      background: var(--surface-2);
       color: var(--ink);
       border: 1px solid var(--line);
+      font-weight: 650;
+    }
+    .example:hover {
+      border-color: rgba(140, 29, 64, 0.35);
     }
     .stats {
       display: grid;
@@ -246,7 +287,11 @@ function sendHtml(res) {
   </header>
   <main>
     <aside>
-      <label for="queryInput">Natural language query</label>
+      <div class="panel-title">
+        <h2>Ask for parking</h2>
+        <span>Natural language</span>
+      </div>
+      <label for="queryInput">Query</label>
       <textarea id="queryInput">Find the nearest visitor parking to the Memorial Union</textarea>
       <div class="actions">
         <button id="searchButton">Search Parking</button>
@@ -254,6 +299,7 @@ function sendHtml(res) {
         <button class="secondary" id="updateButton">Simulate Update</button>
       </div>
       <div class="examples">
+        <h3>Examples</h3>
         <button class="example">Show lots within 500 meters of the BYENG building with >20 open spots</button>
         <button class="example">Where can I park after 6 pm near Poly that doesn't require a permit?</button>
         <button class="example">List EV-charging parking within 1 km of West campus library</button>
