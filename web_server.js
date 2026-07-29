@@ -39,14 +39,19 @@ function sendHtml(res) {
       --maroon: #8c1d40;
       --blue: #1f6f8b;
       --green: #24785a;
+      --teal: #008f91;
+      --warning: #f2a900;
       --bg: #f6f7fb;
       --surface: #ffffff;
+      --surface-2: #f9fbfd;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
+      background:
+        linear-gradient(180deg, #fff8dc 0, rgba(255, 248, 220, 0) 190px),
+        var(--bg);
       color: var(--ink);
     }
     header {
@@ -54,19 +59,50 @@ function sendHtml(res) {
       align-items: center;
       justify-content: space-between;
       gap: 20px;
-      padding: 18px 28px;
+      padding: 20px 28px;
       border-bottom: 1px solid var(--line);
       background: var(--surface);
+      box-shadow: 0 1px 0 rgba(27, 31, 42, 0.03);
+    }
+    .brand {
+      display: grid;
+      gap: 4px;
     }
     h1 {
       margin: 0;
-      font-size: 24px;
+      font-size: 26px;
       line-height: 1.1;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .server-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .server-pill::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 0 3px rgba(36, 120, 90, 0.14);
     }
     main {
       display: grid;
       grid-template-columns: minmax(320px, 430px) minmax(0, 1fr);
-      min-height: calc(100vh - 73px);
+      min-height: calc(100vh - 82px);
     }
     aside {
       padding: 24px;
@@ -190,6 +226,10 @@ function sendHtml(res) {
       font-size: 14px;
     }
     @media (max-width: 850px) {
+      header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
       main { grid-template-columns: 1fr; }
       aside { border-right: 0; border-bottom: 1px solid var(--line); }
       .stats { grid-template-columns: repeat(2, minmax(130px, 1fr)); }
@@ -198,8 +238,11 @@ function sendHtml(res) {
 </head>
 <body>
   <header>
-    <h1>ASU Smart Parking</h1>
-    <div class="status" id="serverStatus">localhost:${PORT}</div>
+    <div class="brand">
+      <h1>ASU Smart Parking</h1>
+      <div class="subtitle">Live parking discovery across ASU campuses</div>
+    </div>
+    <div class="server-pill" id="serverStatus">localhost:${PORT}</div>
   </header>
   <main>
     <aside>
