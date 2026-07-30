@@ -233,6 +233,10 @@ The web app exposes:
 - `GET /api/search?q=...` for natural-language search
 - `POST /api/update` to simulate availability changes
 
+### Dark Mode
+
+The browser demo includes a `Dark Mode` toggle in the header. It follows the system color preference on first load, then saves the user's choice in `localStorage` for later visits.
+
 ## 📊 Sample Data
 
 The system includes sample data for:
