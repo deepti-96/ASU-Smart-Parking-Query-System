@@ -44,14 +44,47 @@ function sendHtml(res) {
       --bg: #f6f7fb;
       --surface: #ffffff;
       --surface-2: #f9fbfd;
+      --page-wash: linear-gradient(180deg, #fff8dc 0, rgba(255, 248, 220, 0) 190px);
+      --shadow-soft: 0 1px 0 rgba(27, 31, 42, 0.03);
+      --shadow-hover: 0 8px 18px rgba(27, 31, 42, 0.12);
+      --focus-ring: rgba(31, 111, 139, 0.18);
+      --secondary-button: #e9edf4;
+      --example-hover: rgba(140, 29, 64, 0.35);
+      --bar-track: #e8edf3;
+      --bar-fill: linear-gradient(90deg, var(--maroon), var(--teal));
+      --danger: #9b1c31;
+      --server-glow: rgba(36, 120, 90, 0.14);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --ink: #f2f5f8;
+      --muted: #aab5c4;
+      --line: #2b3645;
+      --gold: #ffd166;
+      --maroon: #ff6f91;
+      --blue: #7cc7e8;
+      --green: #7bd9a8;
+      --teal: #4dd8d5;
+      --warning: #ffd166;
+      --bg: #0f141b;
+      --surface: #171e27;
+      --surface-2: #202936;
+      --page-wash: linear-gradient(180deg, rgba(255, 198, 39, 0.14) 0, rgba(15, 20, 27, 0) 210px);
+      --shadow-soft: 0 1px 0 rgba(255, 255, 255, 0.04);
+      --shadow-hover: 0 10px 24px rgba(0, 0, 0, 0.28);
+      --focus-ring: rgba(124, 199, 232, 0.24);
+      --secondary-button: #263140;
+      --example-hover: rgba(255, 198, 39, 0.45);
+      --bar-track: #2d3948;
+      --bar-fill: linear-gradient(90deg, var(--gold), var(--teal));
+      --danger: #ff9aa8;
+      --server-glow: rgba(123, 217, 168, 0.18);
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        linear-gradient(180deg, #fff8dc 0, rgba(255, 248, 220, 0) 190px),
-        var(--bg);
+      background: var(--page-wash), var(--bg);
       color: var(--ink);
     }
     header {
@@ -62,7 +95,7 @@ function sendHtml(res) {
       padding: 20px 28px;
       border-bottom: 1px solid var(--line);
       background: var(--surface);
-      box-shadow: 0 1px 0 rgba(27, 31, 42, 0.03);
+      box-shadow: var(--shadow-soft);
     }
     .brand {
       display: grid;
@@ -97,7 +130,7 @@ function sendHtml(res) {
       height: 8px;
       border-radius: 999px;
       background: var(--green);
-      box-shadow: 0 0 0 3px rgba(36, 120, 90, 0.14);
+      box-shadow: 0 0 0 3px var(--server-glow);
     }
     main {
       display: grid;
@@ -148,7 +181,7 @@ function sendHtml(res) {
       box-shadow: inset 0 1px 2px rgba(27, 31, 42, 0.04);
     }
     textarea:focus {
-      outline: 3px solid rgba(31, 111, 139, 0.16);
+      outline: 3px solid var(--focus-ring);
       border-color: var(--blue);
     }
     button {
@@ -164,14 +197,14 @@ function sendHtml(res) {
     }
     button:hover {
       transform: translateY(-1px);
-      box-shadow: 0 8px 18px rgba(27, 31, 42, 0.12);
+      box-shadow: var(--shadow-hover);
     }
     button:focus-visible {
-      outline: 3px solid rgba(31, 111, 139, 0.2);
+      outline: 3px solid var(--focus-ring);
       outline-offset: 2px;
     }
     button.secondary {
-      background: #e9edf4;
+      background: var(--secondary-button);
       color: var(--ink);
     }
     button:disabled {
@@ -207,7 +240,7 @@ function sendHtml(res) {
       font-weight: 650;
     }
     .example:hover {
-      border-color: rgba(140, 29, 64, 0.35);
+      border-color: var(--example-hover);
     }
     .stats {
       display: grid;
@@ -268,13 +301,13 @@ function sendHtml(res) {
       height: 8px;
       overflow: hidden;
       border-radius: 999px;
-      background: #e8edf3;
+      background: var(--bar-track);
     }
     .bar span {
       display: block;
       height: 100%;
       border-radius: inherit;
-      background: linear-gradient(90deg, var(--maroon), var(--teal));
+      background: var(--bar-fill);
     }
     .details {
       display: grid;
@@ -327,7 +360,7 @@ function sendHtml(res) {
       font-size: 14px;
     }
     .status.error {
-      color: #9b1c31;
+      color: var(--danger);
       font-weight: 700;
     }
     .empty {
