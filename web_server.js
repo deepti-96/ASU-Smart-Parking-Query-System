@@ -29,6 +29,11 @@ function sendHtml(res) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ASU Smart Parking</title>
+  <script>
+    const savedTheme = localStorage.getItem('asu-parking-theme');
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.dataset.theme = savedTheme || systemTheme;
+  </script>
   <style>
     :root {
       color-scheme: light;
@@ -131,6 +136,29 @@ function sendHtml(res) {
       border-radius: 999px;
       background: var(--green);
       box-shadow: 0 0 0 3px var(--server-glow);
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .theme-toggle:hover {
+      border-color: var(--example-hover);
     }
     main {
       display: grid;
@@ -386,7 +414,10 @@ function sendHtml(res) {
       <h1>ASU Smart Parking</h1>
       <div class="subtitle">Live parking discovery across ASU campuses</div>
     </div>
-    <div class="server-pill" id="serverStatus">localhost:${PORT}</div>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">Dark Mode</button>
+      <div class="server-pill" id="serverStatus">localhost:${PORT}</div>
+    </div>
   </header>
   <main>
     <aside>
@@ -425,6 +456,17 @@ function sendHtml(res) {
     const statsEl = document.getElementById('stats');
     const titleEl = document.getElementById('resultTitle');
     const actionButtons = Array.from(document.querySelectorAll('button'));
+    const themeToggle = document.getElementById('themeToggle');
+
+    function setTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      localStorage.setItem('asu-parking-theme', theme);
+      const isDark = theme === 'dark';
+      themeToggle.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+      themeToggle.setAttribute('aria-pressed', String(isDark));
+    }
+
+    setTheme(document.documentElement.dataset.theme || 'light');
 
     function escapeHtml(value) {
       return String(value).replace(/[&<>"']/g, (char) => ({
@@ -537,6 +579,10 @@ function sendHtml(res) {
       })
     );
     document.getElementById('updateButton').addEventListener('click', () => withBusy('Updating...', simulateUpdate));
+    themeToggle.addEventListener('click', () => {
+      const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      setTheme(nextTheme);
+    });
     document.querySelectorAll('.example').forEach((button) => {
       button.addEventListener('click', () => {
         queryInput.value = button.textContent;
