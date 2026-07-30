@@ -426,7 +426,7 @@ function sendHtml(res) {
       <div class="subtitle">Live parking discovery across ASU campuses</div>
     </div>
     <div class="header-actions">
-      <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">Dark Mode</button>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch color theme">Dark Mode</button>
       <div class="server-pill" id="serverStatus">localhost:${PORT}</div>
     </div>
   </header>
@@ -451,7 +451,7 @@ function sendHtml(res) {
         <button class="example">Which garage inside Downtown Tempe zone has ADA spaces available now?</button>
       </div>
     </aside>
-    <section>
+    <section aria-live="polite">
       <div class="stats" id="stats"></div>
       <div class="toolbar">
         <strong id="resultTitle">Parking lots</strong>
@@ -475,6 +475,7 @@ function sendHtml(res) {
       const isDark = theme === 'dark';
       themeToggle.textContent = isDark ? 'Light Mode' : 'Dark Mode';
       themeToggle.setAttribute('aria-pressed', String(isDark));
+      themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
     }
 
     setTheme(document.documentElement.dataset.theme || 'light');
