@@ -1,6 +1,6 @@
 # ASU Smart Parking
 
-This project translates natural-language questions about Arizona State University parking into MongoDB geospatial queries. It includes a command-line demo, a small localhost web app, sample parking data, and a Mongo-backed test suite.
+This project translates natural-language questions about Arizona State University parking into MongoDB geospatial queries. It includes a command-line demo, a localhost web app with light/dark themes, sample parking data, and a Mongo-backed test suite.
 
 ## Problem Statement
 
@@ -232,6 +232,8 @@ The web app exposes:
 - `GET /api/stats` for campus-level totals
 - `GET /api/search?q=...` for natural-language search
 - `POST /api/update` to simulate availability changes
+
+The interface shows campus totals, availability bars, permit/rate details, EV and ADA indicators, and responsive layouts for desktop and mobile.
 
 ### Dark Mode
 
