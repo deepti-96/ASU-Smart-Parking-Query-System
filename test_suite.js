@@ -298,6 +298,14 @@ class ParkingTestSuite {
                 throw new Error(`Expected minAvailability=21, got ${result.minAvailability}`);
             }
         });
+
+        await this.runTest('Natural language location keyword boundaries', async () => {
+            const result = this.queryParser.parseQuery('Find parking for a polynomial western event');
+
+            if (result.campus !== undefined || result.longitude !== undefined || result.zones !== undefined) {
+                throw new Error('Unexpected location filters from partial words');
+            }
+        });
     }
 
     // Test time-based filtering

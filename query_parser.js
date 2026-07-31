@@ -99,7 +99,7 @@ class ParkingQueryParser {
     // Extract location from query
     extractLocation(query, criteria) {
         for (const [building, coords] of Object.entries(this.buildingCoordinates)) {
-            if (query.includes(building)) {
+            if (this.containsPhrase(query, building)) {
                 criteria.longitude = coords[0];
                 criteria.latitude = coords[1];
                 criteria.buildingNearby = building;
@@ -235,7 +235,7 @@ class ParkingQueryParser {
     // Extract campus information
     extractCampus(query, criteria) {
         for (const [key, value] of Object.entries(this.campuses)) {
-            if (query.includes(key)) {
+            if (this.containsPhrase(query, key)) {
                 criteria.campus = value;
                 break;
             }
@@ -245,7 +245,7 @@ class ParkingQueryParser {
     // Extract zone information
     extractZones(query, criteria) {
         for (const [key, value] of Object.entries(this.zones)) {
-            if (query.includes(key)) {
+            if (this.containsPhrase(query, key)) {
                 criteria.zones = [value];
                 break;
             }
