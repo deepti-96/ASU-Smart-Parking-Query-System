@@ -290,6 +290,14 @@ class ParkingTestSuite {
                 throw new Error(`Expected maxDistance=0, got ${result.maxDistance}`);
             }
         });
+
+        await this.runTest('Natural language parses strict spot counts', async () => {
+            const result = this.queryParser.parseQuery('Show BYENG parking with >20 spots');
+
+            if (result.minAvailability !== 21) {
+                throw new Error(`Expected minAvailability=21, got ${result.minAvailability}`);
+            }
+        });
     }
 
     // Test time-based filtering
