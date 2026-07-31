@@ -129,7 +129,7 @@ class ParkingQueryParser {
         }
         
         // Default distance if not specified
-        if (!criteria.maxDistance) {
+        if (criteria.maxDistance === undefined) {
             criteria.maxDistance = 1000; // 1km default
         }
     }

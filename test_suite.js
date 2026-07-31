@@ -282,6 +282,14 @@ class ParkingTestSuite {
                 throw new Error('Unexpected ADA filter from "inaccessible"');
             }
         });
+
+        await this.runTest('Natural language preserves zero distance', async () => {
+            const result = this.queryParser.parseQuery('Find parking within 0 meters of Memorial Union');
+
+            if (result.maxDistance !== 0) {
+                throw new Error(`Expected maxDistance=0, got ${result.maxDistance}`);
+            }
+        });
     }
 
     // Test time-based filtering
